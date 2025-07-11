@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BambuOverlay - Configuration</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='config.css') }}">
+</head>
+
+<body class="config">
+    <h1>Bambu Configuration</h1>
+    <p>Manage your connection to Bambu 3D Printer (P, X, and H series)</p>
+
+    <main>
+        <section>
+            <form>
+                <label for="bambu_ip">Printer IP Address:</label><br>
+                <input type="text" id="bambu_ip" name="bambu_ip" value="192.168." required><br>
+                <small>Find IP in Printer Panel WLAN settings</small><br>
+
+                <label for="bambu_port">Port:</label><br>
+                <input type="number" id="bambu_port" name="bambu_port" value="8883" required><br>
+                <small></small><br>
+
+                <label for="username">Username:</label><br>
+                <input type="text" id="username" name="username" value="bblp" required><br>
+                <small></small><br>
+
+                <label for="access_code">Access Code:</label><br>
+                <input type="text" id="access_code" name="access_code" value="" placeholder="" required><br>
+                <small>Find Access Code in Printer Panel WLAN settings</small><br><br>
+
+                <label for="serial">Serial Number:</label><br>
+                <input type="text" id="serial" name="serial" value="" required><br>
+                <small>Find Serial in Printer Panel Device settings under "Printer" </small><br>
+
+
+                <button class="action_connect" type="submit">Connect to Printer</button>
+            </form>
+        </section>
+        <section>
+            <h2>Connection Status</h2>
+            <p id="status">Not connected</p>
+            <p id="error" style="color: red;"></p>
+        </section>
+
+        <section>
+            <h2>Telemetry Data</h2>
+            <p id="telemetry">No data received yet.</p>
+        </section>
+    </main>
+
+
+    <script src="{{ url_for('static', filename='config.js') }}"></script>
+</body>
+
+</html>

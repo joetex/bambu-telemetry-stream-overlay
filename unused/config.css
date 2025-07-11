@@ -1,0 +1,16 @@
+body {
+    font-size: 16px;
+}
+
+.config small {
+    color: #888;
+    font-size: 12px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.config main {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}

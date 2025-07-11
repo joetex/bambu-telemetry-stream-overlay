@@ -1,0 +1,5 @@
+Layer: 192 (100 %)
+Nozzle Temp: 28.875/0
+Bed Temp: 26/0
+Finish ETA: 2025-07-11 00:17
+Speed: Standard

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BambuOverlay - Telemetry</title>
+    <style>
+        body {
+            font-size: 16px;
+        }
+
+        .telemetry small {
+            color: #888;
+            font-size: 12px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .telemetry main {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+        }
+    </style>
+</head>
+
+<body class="telemetry">
+    <!-- <h1>Bambu Main Scene</h1> -->
+    <!-- <p>This is the index.html file served by Flask.</p> -->
+    <main>
+
+        <section>
+            <h2>Connection Status</h2>
+            <p id="status">disconnected</p>
+            <p id="error" style="color: red;"></p>
+        </section>
+
+        <section>
+            <h2>Telemetry Data</h2>
+            <div id="telemetry">No data received yet.</div>
+        </section>
+    </main>
+
+
+    <script src="static/telemetry.js"></script>
+</body>
+
+</html>

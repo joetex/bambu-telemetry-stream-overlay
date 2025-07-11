@@ -1,0 +1,17 @@
+body {
+    font-size: 16px;
+    color: aqua;
+}
+
+.overlay small {
+    color: #888;
+    font-size: 12px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.overlay main {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
