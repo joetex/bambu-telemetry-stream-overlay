@@ -99,7 +99,7 @@ def on_bambu_telemetry(telementry_data):
     global prevTelemetry
     print("Received telemetry data from Bambu printer:", telementry_data)
     prevTelemetry = { **prevTelemetry, **telementry_data }
-    send_to_clients("telemetry", telementry_data)
+    send_to_clients("telemetry", prevTelemetry)
 
 def on_bambu_connect(client, userdata, flags, rc):
     print("Connected to Bambu printer with result code:", rc)
