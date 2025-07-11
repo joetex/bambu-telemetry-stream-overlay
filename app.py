@@ -10,9 +10,16 @@ import tkinter as tk
 from threading import Thread
 import bambu
 
-app = Flask(__name__)
+import os
+import sys
+
+templatesDir = os.getcwd() + '/templates'
+staticDir = os.getcwd() + '/static'
+
+app = Flask(__name__, static_folder=staticDir)
 sock = Sock(app)
 
+prevTelemetry = {}
 fields = {}
 rowId = 2
 clients = set()
@@ -42,6 +49,8 @@ def echo(ws):
             print("MQTT client is connected, sending initial telemetry data")
             # Send initial telemetry data if available
             send_to_client(ws, "status", "connected")
+            
+            send_to_clients("telemetry", prevTelemetry)  # Send previous telemetry data to clients
         while True:
             data = ws.receive()  # Receive message from the client
             if data:
@@ -87,7 +96,9 @@ def send_to_clients(type, data):
 
 
 def on_bambu_telemetry(telementry_data):
+    global prevTelemetry
     print("Received telemetry data from Bambu printer:", telementry_data)
+    prevTelemetry = { **prevTelemetry, **telementry_data }
     send_to_clients("telemetry", telementry_data)
 
 def on_bambu_connect(client, userdata, flags, rc):
@@ -129,12 +140,20 @@ def connect_bambu():
         return
     
     send_to_clients("status", "connecting...")
+    fields['connect_button'].config(text="Connecting to Bambu Printer...")
     fields['connect_button'].config(state=tk.DISABLED)
     credentials = save_entry_value()
-    mqtt_client = bambu.connect_mqtt(credentials, on_bambu_connect, on_bambu_telemetry)
-    
-    mqtt_client.loop_forever()
 
+    try:
+        mqtt_client = bambu.connect_mqtt(credentials, on_bambu_connect, on_bambu_telemetry, on_bambu_disconnect)
+    
+        mqtt_client.loop_forever()
+    except Exception as e:
+        print(f"Error connecting to Bambu printer: {e}")
+        fields['connect_button'].config(text="Connect to Bambu Printer")
+        fields['connect_button'].config(state=tk.ACTIVE)
+        send_to_clients("status", "error")
+        mqtt_client = None
 
 
 def save_entry_value():

@@ -1,5 +1,7 @@
 var ws = new WebSocket("ws://" + location.host + "/bambu");
 
+let min_remain = 0;
+
 ws.onmessage = function (event) {
     let msg = JSON.parse(event.data);
     let type = msg.type;
@@ -12,7 +14,7 @@ ws.onmessage = function (event) {
         let total_layers = data["total_layer_num"] || 0;
         let speed = data["spd_lvl"] || 2;
         let speed_map = { 1: "Silent", 2: "Standard", 3: "Sport", 4: "Ludacris" };
-        let min_remain = data["mc_remaining_time"];
+        min_remain = data["mc_remaining_time"];
 
         let nozzle_temp = (parseFloat(data["nozzle_temper"] || 0) * 9.0) / 5.0 + 32; // Convert to Fahrenheit
         let nozzle_target_temp =
@@ -29,18 +31,18 @@ ws.onmessage = function (event) {
         let layer_elem = document.getElementById("print_layer");
         let nozzle_temp_elem = document.getElementById("nozzle_temp");
         let bed_temp_elem = document.getElementById("bed_temp");
-        let finish_eta_elem = document.getElementById("finish_time");
+        // let finish_eta_elem = document.getElementById("finish_time");
         let speed_elem = document.getElementById("print_speed");
         // let future_time = Date.now() + timedelta(minutes=min_remain)
         //     future_time_str = future_time.strftime("%Y-%m-%d %H:%M")
 
         layer_elem.innerText = `${layer} of ${total_layers} (${data["mc_percent"]} %)`;
-        nozzle_temp_elem.innerText = `${parseInt(nozzle_temp)} / ${nozzle_target_temp} F°`;
-        bed_temp_elem.innerText = `${parseInt(bed_temp)} / ${bed_target_temp} F°`;
-        finish_eta_elem.innerText = new Date(Date.now() + min_remain * 60000)
-            .toISOString()
-            .slice(0, 19)
-            .replace("T", " ");
+        nozzle_temp_elem.innerText = `${parseInt(nozzle_temp)}° / ${nozzle_target_temp}° F`;
+        bed_temp_elem.innerText = `${parseInt(bed_temp)}° / ${bed_target_temp}° F`;
+        // finish_eta_elem.innerText = new Date(Date.now() + min_remain * 60000)
+        //     .toISOString()
+        //     .slice(0, 19)
+        //     .replace("T", " ");
         speed_elem.innerText = speed_map[speed];
 
         active_ams = data["ams"]["tray_now"];
@@ -74,6 +76,47 @@ ws.onmessage = function (event) {
         console.warn("Unknown message type: " + type);
     }
 };
+
+const SECOND_IN_MILLISECONDS = 1000;
+const MINUTE_IN_MILLISECONDS = SECOND_IN_MILLISECONDS * 60;
+const HOUR_IN_MILLISECONDS = MINUTE_IN_MILLISECONDS * 60;
+const DAY_IN_MILLISECONDS = HOUR_IN_MILLISECONDS * 24;
+let today = Date.now();
+// let countdownTo = today + DAY_IN_MILLISECONDS;
+let countdownElement = document.getElementById("finish_time");
+const countdown = () => {
+    // const currentTime = performance.now();
+    const timeLeft = min_remain * 60000;
+
+    if (timeLeft < 0) {
+        countdownElement.innerHTML = "Ding!";
+        return;
+    }
+
+    const daysLeft = Math.floor(timeLeft / DAY_IN_MILLISECONDS);
+
+    const hoursLeft = Math.floor(
+        (timeLeft % DAY_IN_MILLISECONDS) / HOUR_IN_MILLISECONDS
+    ).toLocaleString("en-US", { minimumIntegerDigits: 2 });
+
+    const minutesLeft = Math.floor(
+        (timeLeft % HOUR_IN_MILLISECONDS) / MINUTE_IN_MILLISECONDS
+    ).toLocaleString("en-US", { minimumIntegerDigits: 2 });
+
+    const secondsLeft = Math.floor(
+        (timeLeft % MINUTE_IN_MILLISECONDS) / SECOND_IN_MILLISECONDS
+    ).toLocaleString("en-US", { minimumIntegerDigits: 2 });
+
+    document.getElementById("days").innerHTML = `${daysLeft}`;
+    document.getElementById("hours").innerHTML = `${hoursLeft}`;
+    document.getElementById("minutes").innerHTML = `${minutesLeft}`;
+
+    // countdownElement.innerHTML = `${daysLeft}d:${hoursLeft}h:${minutesLeft}m`;
+
+    requestAnimationFrame(countdown);
+};
+
+requestAnimationFrame(countdown);
 
 function sendMessage() {
     var input = document.getElementById("messageInput");

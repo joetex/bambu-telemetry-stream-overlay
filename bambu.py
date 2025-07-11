@@ -50,11 +50,15 @@ def on_disconnect(callback):
         # Handle disconnection logic here if needed
     return _on_disconnect
 
+
+prevTelemetry = {}
+
 # The callback for when a PUBLISH message is received from the server.
 # I'm really only using msg parameter here, but need to keep the first 2 args to match
 # the callback signature
 def on_message(callback):
     def _on_message(client, userdata, msg):
+        global prevTelemetry
         # Current date and time
         now = datetime.now()
         doc = json.loads(msg.payload)
@@ -73,8 +77,10 @@ def on_message(callback):
         try:
             # Write the raw JSON first incase there's a key error when we start trying to access it
             with telem_json_path.open("w") as fp:
-                fp.write(json.dumps(doc))
+                prevTelemetry = { **prevTelemetry, **doc }
+                fp.write(json.dumps(prevTelemetry))
 
+            
             if not doc:
                 return
 
@@ -139,7 +145,7 @@ def on_message(callback):
 
 
 
-def connect_mqtt(credentials, on_bambu_connect, on_telemetry_data):
+def connect_mqtt(credentials, on_bambu_connect, on_telemetry_data, on_bambu_disconnect):
     
     print("Connecting to Bambu printer...")
     client = mqtt.Client()
@@ -149,6 +155,7 @@ def connect_mqtt(credentials, on_bambu_connect, on_telemetry_data):
 
     client.on_connect = on_connect(on_bambu_connect)
     client.on_message = on_message(on_telemetry_data)
+    client.on_disconnect = on_disconnect(on_bambu_disconnect)
 
     # set username and password
     # Username isn't something you can change, so hardcoded here

@@ -1,1 +1,1 @@
-{"print": {"wifi_signal": "-55dBm", "command": "push_status", "msg": 1, "sequence_id": "11550"}}
+{"print": {"nozzle_temper": 219.8125, "wifi_signal": "-58dBm", "command": "push_status", "msg": 1, "sequence_id": "25080"}}
