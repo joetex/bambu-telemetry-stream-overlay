@@ -1,8 +1,8 @@
 ## Bambu Telemetry Stream Overlay
 
-A work in progress to use Browser Source in OBS to render bambu 3d printer telemetry.  
+A work in progress to simplify using a Browser Source in OBS to render bambu 3d printer telemetry.  
 
-The Python application uses a simple UI to connect to your Bambu Printer (P, X, H) series.  In addition it automatically starts a Flask web server to host `overlay.html` and `telemetry.html` files to customize the experience.
+The Python application uses a simple UI to connect to your Bambu Printer (P, X, H) series using MQTT protocol.  It automatically starts a local web server to host `overlay.html` and `telemetry.html` files to customize the experience.  
 
 <img width="250" height="260" alt="image" src="https://github.com/user-attachments/assets/1d446868-d051-4054-a9a2-9240de308afe" />
 
