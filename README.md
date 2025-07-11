@@ -28,7 +28,8 @@ python app.py
 
 All the telemetry data is passed through websockets from the local web server to the `overlay.js` and `telemetry.js` files.  You can use the existing examples to modify the HTML/CSS files to change the look and feel of the UI.
 
-## Browser Sources
+## OBS Browser Sources
+Should work with any streaming app, just pass the URL below into the Browser Source.
 
 #### Overlay
 http://127.0.0.1:5000/
