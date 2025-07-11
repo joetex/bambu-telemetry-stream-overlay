@@ -13,6 +13,7 @@ ws.onmessage = function (event) {
         let layer = data["layer_num"] || 0;
         let total_layers = data["total_layer_num"] || 0;
         let speed = data["spd_lvl"] || 2;
+        let speed_mag = data["spd_mag"] || 0;
         let speed_map = { 1: "Silent", 2: "Standard", 3: "Sport", 4: "Ludacris" };
         min_remain = data["mc_remaining_time"];
 
@@ -43,7 +44,7 @@ ws.onmessage = function (event) {
         //     .toISOString()
         //     .slice(0, 19)
         //     .replace("T", " ");
-        speed_elem.innerText = speed_map[speed];
+        speed_elem.innerText = speed_mag + " mm/s"; // speed_map[speed];
 
         active_ams = data["ams"]["tray_now"];
 

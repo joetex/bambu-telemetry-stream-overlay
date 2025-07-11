@@ -1,6 +1,12 @@
 body {
     font-size: 16px;
-    color: red;
+    font-family: "Barlow Condensed", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    color: white;
+    font-weight: bold;
+
+    background-color: rgba(0, 0, 0, 0) !important;
 }
 
 .overlay small {
@@ -16,9 +22,20 @@ body {
     align-items: flex-start;
 }
 
+.overlay .printer_data {
+    color: #20fa81;
+    background-image: linear-gradient(45deg, #20fa81, #fba537 50%, #872f2d 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.overlay .printer_data .title {
+    color: #ccc;
+}
 ul {
     padding: 0;
     margin: 0;
+    margin-top: 10px;
 }
 li {
     display: inline-block;
