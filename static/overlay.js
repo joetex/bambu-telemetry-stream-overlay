@@ -12,6 +12,7 @@ ws.onmessage = function (event) {
         // messagesDiv.innerHTML = "<pre>" + JSON.stringify(data, null, 2) + "</pre>";
         let layer = data["layer_num"] || 0;
         let total_layers = data["total_layer_num"] || 0;
+        let layer_pct = data["mc_percent"]; //Math.round((layer / total_layers) * 100.0);
         let speed = data["spd_lvl"] || 2;
         let speed_mag = data["spd_mag"] || 0;
         let speed_map = { 1: "Silent", 2: "Standard", 3: "Sport", 4: "Ludacris" };
@@ -37,7 +38,7 @@ ws.onmessage = function (event) {
         // let future_time = Date.now() + timedelta(minutes=min_remain)
         //     future_time_str = future_time.strftime("%Y-%m-%d %H:%M")
 
-        layer_elem.innerText = `${layer} of ${total_layers} (${data["mc_percent"]} %)`;
+        layer_elem.innerText = `${layer} of ${total_layers} (${layer_pct} %)`;
         nozzle_temp_elem.innerText = `${parseInt(nozzle_temp)}° / ${nozzle_target_temp}° F`;
         bed_temp_elem.innerText = `${parseInt(bed_temp)}° / ${bed_target_temp}° F`;
         // finish_eta_elem.innerText = new Date(Date.now() + min_remain * 60000)
