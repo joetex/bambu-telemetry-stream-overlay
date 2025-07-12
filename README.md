@@ -4,7 +4,13 @@ A work in progress to simplify using a Browser Source in OBS to render bambu 3d 
 
 The Python application uses a simple UI to connect to your Bambu Printer (P, X, H) series using MQTT protocol.  It automatically starts a local web server to host `overlay.html` and `telemetry.html` files to customize the experience.  
 
+The Telemetry data on the bottom left of the preview screen is customizable in `static/overlay.html`, `static/overlay.css` and `static/overlay.js`
+
+<img width="1608" height="1079" alt="image" src="https://github.com/user-attachments/assets/768e4457-b977-4926-be80-0653808ca024" />
+
+
 <img width="250" height="260" alt="image" src="https://github.com/user-attachments/assets/1d446868-d051-4054-a9a2-9240de308afe" />
+
 
 
 ### Install using Source Code
@@ -38,12 +44,3 @@ The live feed of customized telemetry experience.
 #### Telemetry
 http://127.0.0.1:5000/telemetry
 The live feed of raw JSON output in a format that can be viewed.
-
-## Example Stream
-
-
-The Telemetry data on the bottom left of the preview screen is customizable in `static/overlay.html`, `static/overlay.css` and `static/overlay.js`
-
-<img width="1608" height="1079" alt="image" src="https://github.com/user-attachments/assets/768e4457-b977-4926-be80-0653808ca024" />
-
-
