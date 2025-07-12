@@ -6,7 +6,7 @@ The Python application uses a simple UI to connect to your Bambu Printer (P, X, 
 
 The Telemetry data on the bottom left of the preview screen is customizable in `static/overlay.html`, `static/overlay.css` and `static/overlay.js`
 
-<img width="1611" height="1073" alt="image" src="https://github.com/user-attachments/assets/82468b7c-cfe0-42be-af29-7edcdff36ee7" />
+<img width="600" height="338" alt="image" src="https://assets.acos.games/bambu-telemetry-stream-overlay-0.0.2.webp" />
 
 
 <img width="250" height="260" alt="image" src="https://github.com/user-attachments/assets/1d446868-d051-4054-a9a2-9240de308afe" />
